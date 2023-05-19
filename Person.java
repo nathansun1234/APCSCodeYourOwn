@@ -2,12 +2,10 @@ import java.util.*;
 public class Person { 
     private String name; 
     private double money; 
-    private Car auto;
     private int hunger;
 
-    public Person(String name, Car auto){  
-        this.name = name;  
-        this.auto = auto;   
+    public Person(String name){  
+        this.name = name;   
         hunger = 100;
         money = 1000;
     } 
@@ -51,10 +49,6 @@ public class Person {
 
     public double getMoney(){ 
         return money;
-    } 
-
-    public Car getCar(){ 
-        return auto;
     } 
 
     public String getName(){ 

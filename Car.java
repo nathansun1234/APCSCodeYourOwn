@@ -4,19 +4,19 @@ public class Car {
     private int gas;
     private int capacity;
 
-    public Car(String name) {
+    public Car(int id) {
         gas = 15;
-        if (name.equals("aventador")) {
+        if (id == 0) {
             model = "Lamborghini Aventador";
             mileage = 15;
             capacity = 100;
         }
-        else if (name.equals("f150")) {
+        else if (id == 1) {
             model = "Ford F150";
             mileage = 20;
             capacity = 500;
         }
-        else if (name.equals("civic")) {
+        else if (id == 2) {
             model = "Honda Civic";
             mileage = 40;
             capacity = 300;
