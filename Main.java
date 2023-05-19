@@ -17,5 +17,6 @@ public class Main {
                 System.out.println("Here is the info about the cars:"); //todo: write info
             }
         }
+
     }
 }

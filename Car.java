@@ -1,9 +1,11 @@
 public class Car {
     private String model;
     private int mileage;
+    private int gas;
     private int capacity;
 
     public Car(String name) {
+        gas = 15;
         if (name.equals("aventador")) {
             model = "Lamborghini Aventador";
             mileage = 15;
@@ -27,7 +29,20 @@ public class Car {
     public int getMileage() {
         return mileage;
     }
-    public int getCapacity() {
+    public int getFoodCapacity() {
         return capacity;
+    }
+    public int getGas() {
+        return gas;
+    }
+
+    public void setGas(int n) {
+        gas = n;
+    }
+    public void decreaseGas(int n) {
+        gas -= n;
+    }
+    public void increaseGas(int n) {
+        gas += n;
     }
 }

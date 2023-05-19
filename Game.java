@@ -21,6 +21,12 @@ public class Game {
     }
 
     public void turn() {
-        System.out.println("Day ");
+        Scanner scan = new Scanner(System.in);
+        int task;
+        System.out.println("Day " + day);
+        System.out.println("What do you want to do today? (0 = Drive, 1 = Earn money, 2 = Shop)");
+        task = scan.nextInt();
+
+
     }
 }
