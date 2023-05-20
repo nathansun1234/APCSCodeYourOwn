@@ -1,25 +1,26 @@
 public class Car {
     private String model;
-    private int mileage;
-    private int gas;
-    private int capacity;
+    private int mileage; //must be factor of 100
+    private int gas; //max of 20
+    private int capacity; //days of food it can carry
+    private int food; //max of capacity
 
     public Car(int id) {
-        gas = 15;
+        gas = 20;
         if (id == 0) {
             model = "Lamborghini Aventador";
-            mileage = 15;
-            capacity = 100;
+            mileage = 10;
+            capacity = 2;
         }
         else if (id == 1) {
             model = "Ford F150";
             mileage = 20;
-            capacity = 500;
+            capacity = 10;
         }
         else if (id == 2) {
             model = "Honda Civic";
-            mileage = 40;
-            capacity = 300;
+            mileage = 25;
+            capacity = 5;
         }
     }
 
@@ -29,11 +30,14 @@ public class Car {
     public int getMileage() {
         return mileage;
     }
-    public int getFoodCapacity() {
+    public int getCapacity() {
         return capacity;
     }
     public int getGas() {
         return gas;
+    }
+    public int getFood() {
+        return food;
     }
 
     public void setGas(int n) {
@@ -44,5 +48,14 @@ public class Car {
     }
     public void increaseGas(int n) {
         gas += n;
+    }
+    public void setFood(int n) {
+        food = n;
+    }
+    public void decreaseFood(int n) {
+        food -= n;
+    }
+    public void increaseFood(int n) {
+        food += n;
     }
 }

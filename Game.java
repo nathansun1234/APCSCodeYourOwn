@@ -17,7 +17,7 @@ public class Game {
         System.out.println("Name your character:");
         String name = scan.next();
 
-        System.out.println("Choose your c0ar: (0 = Lamborghini Aventador, 1 = Ford F150, 2 = Honda Civic)"); //todo: add info about cars
+        System.out.println("Choose your car: (0 = Lamborghini Aventador, 1 = Ford F150, 2 = Honda Civic)"); //todo: add info about cars
         int carId = scan.nextInt();
 
         //inits variables
@@ -35,22 +35,49 @@ public class Game {
             dayLimit = 25;
         }
     }
+    public void printInfo() {
+        System.out.println("Day " + day + " / " + dayLimit);
+        System.out.println("Location: " + location + "mi / 2500mi");
+        System.out.println("Money: " + character.getMoney() + "$");
+        System.out.println("Hunger: " + character.getHunger() + "%");
+        System.out.println("Food: " + vehicle.getFood() + " (" + vehicle.getCapacity() + " max)");
+        System.out.println("Gas: " + vehicle.getGas() + " gallons");
+    }
 
     public void turn() {
+        boolean done = false;
         Scanner scan = new Scanner(System.in);
-        System.out.println("Day " + day);
         System.out.println("What do you want to do today? (0 = Drive, 1 = Earn money, 2 = Shop)");
-        int action = scan.nextInt();
-        if (action == 0) {
+        while (!done) {
+            int action = scan.nextInt();
+            if (action == 0) {
+                int milesDriven = 0;
+                while (vehicle.getGas() > 0 &&  milesDriven < 101-vehicle.getMileage()) {
+                    vehicle.decreaseGas(1);
+                    milesDriven += vehicle.getMileage();
+                }
+                if (vehicle.getGas() == 0) {
+                    System.out.println("You drove " + milesDriven + "miles and ran out of gas");
+                }
+                else {
+                    System.out.println("You drove " + milesDriven + " miles");
+                }
+                location += milesDriven;
+                done = true;
+            }
+            else if (action == 1) {
 
+            }
+            else if (action == 2) {
+
+            }
         }
-        else if (action == 1) {
-
+        day++;
+        if (vehicle.getFood() > 0) {
+            vehicle.decreaseFood(1);
         }
-        else if (action == 2) {
-            
+        else {
+            character.incrementHunger(-10);
         }
-
-
     }
 }
