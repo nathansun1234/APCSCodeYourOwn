@@ -33,7 +33,7 @@ public class Game {
         }
         else if (difficulty == 2) {
             dayLimit = 25;
-        }
+        }//Day limit more similar 25-30-40...change RNG?
     }
     public void printInfo() {
         System.out.println("Day " + day + " / " + dayLimit);
@@ -42,7 +42,7 @@ public class Game {
         System.out.println("Hunger: " + character.getHunger() + "%");
         System.out.println("Food: " + vehicle.getFood() + " (" + vehicle.getCapacity() + " max)");
         System.out.println("Gas: " + vehicle.getGas() + " gallons");
-    }
+    }//have max tank size
 
     public void turn() {
         boolean done = false;
@@ -58,16 +58,16 @@ public class Game {
                 }
                 if (vehicle.getGas() == 0) {
                     System.out.println("You drove " + milesDriven + "miles and ran out of gas");
-                }
+                }//create new variable for car labeled "speed"- lambo travels 100/miles day,  
+                //prius 60 miles/day that way each car has distinctive advantages and gameplay
                 else {
                     System.out.println("You drove " + milesDriven + " miles");
                 }
                 location += milesDriven;
                 done = true;
             }
-            else if (action == 1) {
-
-            }
+            else if (action == 1) { 
+//todo: rob bank (luck, chance of lost money for bail)[minigame?], sell food, work (-hunger)            }
             else if (action == 2) {
 
             }
