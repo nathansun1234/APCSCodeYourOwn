@@ -67,17 +67,18 @@ public class Game {
                 done = true;
             }
             else if (action == 1) { 
-//todo: rob bank (luck, chance of lost money for bail)[minigame?], sell food, work (-hunger)            }
+//todo: rob bank (luck, chance of lost money for bail)[minigame?], sell food, work (-hunger)
+            }
             else if (action == 2) {
 
             }
-        }
-        day++;
-        if (vehicle.getFood() > 0) {
-            vehicle.decreaseFood(1);
-        }
-        else {
-            character.incrementHunger(-10);
+            day++;
+            if (vehicle.getFood() > 0) {
+                vehicle.decreaseFood(1);
+            }
+            else {
+                character.incrementHunger(-10);
+            }
         }
     }
 }
