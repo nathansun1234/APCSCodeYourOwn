@@ -5,6 +5,7 @@ public class Game {
     private int location;
     private int day;
     private int dayLimit; 
+    private boolean gameOver;
 
     public Game() {
         //asks for values for character, car, settings
@@ -23,7 +24,8 @@ public class Game {
         //inits variables
         character = new Person(name);
         vehicle = new Car(carId);
-        location = 0;
+        location = 0; 
+        gameOver = false;
         day = 0;
         if (difficulty == 0) {
             dayLimit = 40;
@@ -67,8 +69,25 @@ public class Game {
                 done = true;
             }
             else if (action == 1) {  
-                System.out.println("How would you like to earn money? (0 = trade, 1 = gamble, 2 = work, 3 = rob bank)");
+                System.out.println("How would you like to earn money? (0 = gamble, 1 = work, 2 = rob bank)");
                 int choice = scan.nextInt(); 
+                if(choice == 0) {  
+                    System.out.println("How much money would you like to put up? You have $"+character.getMoney()); 
+                    double money = scan.nextDouble(); 
+                   if(money >=character.getMoney()){ 
+                    money = character.getMoney();
+                   } 
+                   if(Math.random() > 0.5){ 
+                    character.setMoney(money); 
+                    System.out.println("Congrats! You won $"+money+" and now have $"+character.getMoney()); 
+                    done = true;
+                   } 
+                   else{ 
+                    character.setMoney(-1*money); 
+                    System.out.println("Yikes! You lost $"+money+" and now have $"+character.getMoney());
+                    done = true;
+                   }
+                }
 
 
             }
@@ -86,6 +105,6 @@ public class Game {
     }
 
     public boolean checkGameOver() {
-        return true; //todo: write method
+        return gameOver; //todo: write method
     }
 }
