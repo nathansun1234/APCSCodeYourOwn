@@ -26,10 +26,10 @@ public class Game {
         location = 0;
         day = 0;
         if (difficulty == 0) {
-            dayLimit = 100;
+            dayLimit = 40;
         }
         else if (difficulty == 1) {
-            dayLimit = 50;
+            dayLimit = 30;
         }
         else if (difficulty == 2) {
             dayLimit = 25;
@@ -66,8 +66,11 @@ public class Game {
                 location += milesDriven;
                 done = true;
             }
-            else if (action == 1) { 
-//todo: rob bank (luck, chance of lost money for bail)[minigame?], sell food, work (-hunger)
+            else if (action == 1) {  
+                System.out.println("How would you like to earn money? (0 = trade, 1 = gamble, 2 = work, 3 = rob bank)");
+                int choice = scan.nextInt(); 
+
+
             }
             else if (action == 2) {
 
@@ -80,5 +83,9 @@ public class Game {
                 character.incrementHunger(-10);
             }
         }
+    }
+
+    public boolean checkGameOver() {
+        return true; //todo: write method
     }
 }
