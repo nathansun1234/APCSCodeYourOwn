@@ -1,12 +1,18 @@
 public class Main {
     public static void main (String[] args) {
         Game round = new Game();
-        boolean gameOver = false;
-        while (!gameOver) {
+        int gameOver = 0;
+        while (gameOver == 0) {
             round.printInfo();
             round.turn();
             gameOver = round.checkGameOver();
         }
-        //round.gameOverMessage(); todo write this method in game
+        if (gameOver == 1) {
+
+        }
+        else if (gameOver == 2) {
+            
+        }
+        
     }
 }

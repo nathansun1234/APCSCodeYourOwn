@@ -22,6 +22,7 @@ public class Car {
             mileage = 25;
             capacity = 5;
         }
+        food = capacity;
     }
 
     public String getModel() {

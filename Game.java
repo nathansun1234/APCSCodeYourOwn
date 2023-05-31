@@ -4,7 +4,8 @@ public class Game {
     private Car vehicle;
     private int location;
     private int day;
-    private int dayLimit; 
+    private int dayLimit;
+    private boolean arrested;
     private boolean gameOver;
 
     public Game() {
@@ -25,8 +26,9 @@ public class Game {
         character = new Person(name);
         vehicle = new Car(carId);
         location = 0; 
-        gameOver = false;
         day = 0;
+        arrested = false;
+        gameOver = false;
         if (difficulty == 0) {
             dayLimit = 40;
         }
@@ -35,8 +37,9 @@ public class Game {
         }
         else if (difficulty == 2) {
             dayLimit = 25;
-        }//Day limit more similar 25-30-40...change RNG?
+        }
     }
+
     public void printInfo() {
         System.out.println("Day " + day + " / " + dayLimit);
         System.out.println("Location: " + location + "mi / 2500mi");
@@ -49,10 +52,10 @@ public class Game {
     public void turn() {
         boolean done = false;
         Scanner scan = new Scanner(System.in);
-        System.out.println("What do you want to do today? (0 = Drive, 1 = Earn money, 2 = Shop)");
         while (!done) {
+            System.out.println("What do you want to do today? (0 = Drive, 1 = Earn money, 2 = Shop, 3 = Get info on actions-doesn't take time)");
             int action = scan.nextInt();
-            if (action == 0) {
+            if (action == 0) { //drive
                 int milesDriven = 0;
                 while (vehicle.getGas() > 0 &&  milesDriven < 101-vehicle.getMileage()) {
                     vehicle.decreaseGas(1);
@@ -68,43 +71,126 @@ public class Game {
                 location += milesDriven;
                 done = true;
             }
-            else if (action == 1) {  
+            else if (action == 1) { //earn money
                 System.out.println("How would you like to earn money? (0 = gamble, 1 = work, 2 = rob bank)");
                 int choice = scan.nextInt(); 
-                if(choice == 0) {  
+                if (choice == 0) { //gamble
                     System.out.println("How much money would you like to put up? You have $"+character.getMoney()); 
-                    double money = scan.nextDouble(); 
-                   if(money >=character.getMoney()){ 
-                    money = character.getMoney();
-                   } 
-                   if(Math.random() > 0.5){ 
-                    character.setMoney(money); 
-                    System.out.println("Congrats! You won $"+money+" and now have $"+character.getMoney()); 
-                    done = true;
-                   } 
-                   else{ 
-                    character.setMoney(-1*money); 
-                    System.out.println("Yikes! You lost $"+money+" and now have $"+character.getMoney());
-                    done = true;
+                    int bet = scan.nextInt(); 
+                    if(bet >= character.getMoney()){ 
+                        bet = character.getMoney();
+                    } 
+                    if(Math.random() > 0.5){
+                        character.incrementMoney(bet);; 
+                        System.out.println("Congrats! You won $"+bet+" and now have $"+character.getMoney()); 
+                    } 
+                    else{ 
+                        character.incrementMoney(-1*bet); 
+                        System.out.println("Yikes! You lost $"+bet+" and now have $"+character.getMoney());
                    }
                 }
-
+                else if (choice == 1) { //work
+                    int wageMade = (int) (50 * Math.random()) + 50; //you can make between 50 and 100 dollars, change if you want
+                    System.out.println("You made $" + wageMade + "!");
+                }
+                else if (choice == 2) { //rob a bank
+                    int randInt = (int) (100 * Math.random());
+                    if (vehicle.getModel().equals("Lamborghini Aventador")) {
+                        if (randInt < 50) {
+                            System.out.println("Success! You made 1000$");
+                            character.incrementMoney(1000);
+                        }
+                        else if (randInt < 75) {
+                            int fine = (int) (900 * Math.random()) + 100;
+                            System.out.println("You got caught. You were fined $" + fine);
+                            character.incrementMoney(-1 * fine);
+                        }
+                        else {
+                            System.out.println("You got caught and put in jail.");
+                            arrested = true;
+                        }
+                    }
+                    else if (vehicle.getModel().equals("Ford F150")) {
+                        if (randInt < 30) {
+                            System.out.println("Success! You made 1000$");
+                            character.incrementMoney(1000);
+                        }
+                        else if (randInt < 70) {
+                            int fine = (int) (900 * Math.random()) + 100;
+                            System.out.println("You got caught. You were fined $" + fine);
+                            character.incrementMoney(-1 * fine);
+                        }
+                        else {
+                            System.out.println("You got caught and put in jail.");
+                            arrested = true;
+                        }
+                    }
+                    else if (vehicle.getModel().equals("Honda Civic")) {
+                        if (randInt < 20) {
+                            System.out.println("Success! You made 1000$");
+                            character.incrementMoney(1000);
+                        }
+                        else if (randInt < 60) {
+                            int fine = (int) (900 * Math.random()) + 100;
+                            System.out.println("You got caught. You were fined $" + fine);
+                            character.incrementMoney(-1 * fine);
+                        }
+                        else {
+                            System.out.println("You got caught and put in jail.");
+                            arrested = true;
+                        }
+                    }
+                }
+                done = true;
+            }
+            else if (action == 2) { //shop
 
             }
-            else if (action == 2) {
+            else if (action == 3) { //get info
+                System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop)");
+                int choice = scan.nextInt();
+                if (choice == 0) {
+                    System.out.println("You'll drive 100 miles or until your vehicle runs out of gas, each vehicle has a different mileage");
+                }
+                else if (choice == 1) {
+                    System.out.println("Gamble: Bet a certain amount of money, 50% it'll get doubled and 50% it'll be lose");
+                    System.out.println("Work: Make a random amount between $50 and $100");
+                    System.out.println("Rob a bank: Either succeed and make $1000, fined an amount between $100-$1000, or arrested (lose). Chance of success depends on the vehicle (Lamborghini: 50%, Ford: 30%, Honda: 20%). Fine or arrested split evenly among remaining chance");
+                }
+                else if (choice == 2) {
 
-            }
-            day++;
-            if (vehicle.getFood() > 0) {
-                vehicle.decreaseFood(1);
-            }
-            else {
-                character.incrementHunger(-10);
+                }
             }
         }
+        if (vehicle.getFood() > 0) { //if we have food, eat food
+            vehicle.decreaseFood(1);
+        }
+        else { //if not, we get hungrier
+            character.incrementHunger(-10);
+        }
+        day++;
     }
 
-    public boolean checkGameOver() {
-        return gameOver; //todo: write method
+    public int checkGameOver() {
+        if (character.getHunger() < 0) {
+            return 1; //starved to death
+        }
+        else if (character.getMoney() < 0) {
+            return 2; //got into debt and shot by debters (we can implement debt later if we want, too lazy rn)
+        }
+        else if (day > dayLimit) {
+            return 3; //ran out of time
+        }
+        else if (arrested) {
+            return 4;
+        }
+        else if (location > 2500) {
+            return 5; //won
+        }
+        return 0; //game not over
+    }
+
+    public void printFinalStats() {
+
     }
 }
