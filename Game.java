@@ -144,7 +144,51 @@ public class Game {
                 done = true;
             }
             else if (action == 2) { //shop
-
+                System.out.println("What would you like to buy? (0 = Food, 1 = gas)"); 
+                int choice = scan.nextInt(); 
+                if(choice == 0){ 
+                    System.out.println("You have $"+character.getMoney()+". Food costs $15/serving and your "+vehicle.getModel()+" can store "+(vehicle.getCapacity()-vehicle.getFood())+" days worth of food. \nHow many days of food would you like to buy?"); 
+                    int amount = scan.nextInt()  
+                    if(amount*15 >= character.getMoney()){  
+                        System.out.println("You ran out of money and could only buy "+((character.getMoney())/15)+" days worth of food"); 
+                        amount = character.getMoney()/15;
+                        if((amount+vehicle.getFood()) > vehicle.getCapacity()){ 
+                            System.out.println("You couldn't fit the food in your car and wasted "+(amount+vehicle.getFood()-vehicle.getCapacity())+" days worth of food"); 
+                            vehicle.setFood(vehicle.getCapacity()); 
+                            
+                        } 
+                        else{ 
+                            vehicle.increaseFood(amount);
+                        }  
+                        character.setMoney(0);  
+                    }
+                    else{ 
+                        character.incrementMoney(-15*amount); 
+                        if((amount+vehicle.getFood()) > vehicle.getCapacity()){ 
+                            System.out.println("You couldn't fit the food in your car and wasted "+(amount+vehicle.getFood()-vehicle.getCapacity())+" days worth of food"); 
+                            vehicle.setFood(vehicle.getCapacity()); 
+                        } 
+                        else{ 
+                            vehicle.increaseFood(amount);
+                        }
+                    }
+                } 
+                if(choice == 1){ 
+                    System.out.println("You have $"+character.getMoney()+". Gas costs $5/gallon and your "+vehicle.getModel()+" needs "+(20-vehicle.getGas())+" gallons for a full tank. \nHow many gallons would you like to buy?"); 
+                    int amount = scan.nextInt()   
+                    if(amount+vehicle.getGas()>20){ 
+                            amount = 20-vehicle.getGas();
+                    }
+                    if(amount*5 >= character.getMoney()){  
+                        System.out.println("You ran out of money and could only buy "+((character.getMoney())/5)+" gallons"); 
+                        amount = character.getMoney()/5;
+                        character.setMoney(0); 
+                    }
+                    else{ 
+                        vehicle.setGas(amount+vehicle.getGas()); 
+                        character.incrementMoney(-5*amount);
+                    }
+                }
             }
             else if (action == 3) { //get info
                 System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop)");
