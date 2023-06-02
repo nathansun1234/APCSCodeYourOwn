@@ -44,19 +44,13 @@ public class Car {
     public void setGas(int n) {
         gas = n;
     }
-    public void decreaseGas(int n) {
-        gas -= n;
-    }
-    public void increaseGas(int n) {
+    public void incrementGas(int n) {
         gas += n;
     }
     public void setFood(int n) {
         food = n;
     }
-    public void decreaseFood(int n) {
-        food -= n;
-    }
-    public void increaseFood(int n) {
+    public void incrementFood(int n) {
         food += n;
     }
 }
