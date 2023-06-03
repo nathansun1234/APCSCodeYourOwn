@@ -2,11 +2,11 @@ import java.util.*;
 public class Game {
     private Person character;
     private Car vehicle;
+    private int oldLocation;
     private int location;
     private int day;
     private int dayLimit;
     private boolean arrested;
-    private boolean gameOver;
     Scanner scan = new Scanner(System.in);
     public Game() {
         //asks for values for character, car, settings
@@ -24,10 +24,10 @@ public class Game {
         //inits variables
         character = new Person(name);
         vehicle = new Car(carId);
+        oldLocation = 0;
         location = 0; 
-        day = 0;
+        day = 1;
         arrested = false;
-        gameOver = false;
         if (difficulty == 0) {
             dayLimit = 40;
         }
@@ -41,7 +41,28 @@ public class Game {
 
     public void printInfo() {
         System.out.println("Day " + day + " / " + dayLimit);
-        System.out.println("Location: " + location + "mi / 2500mi");
+        System.out.print("Location: " + location + " miles / 2500 miles (Currently in ");
+        if (location < 200) {
+            System.out.println("California, " + (200 - location) + " miles until Arizona)");
+        }
+        else if (location < 500) {
+            System.out.println("Arizona, " + (500 - location) + " miles until New Mexico)");
+        }
+        else if (location < 800) {
+            System.out.println("California, " + (800 - location) + " miles until Texas)");
+        }
+        else if (location < 1000) {
+            System.out.println("California, " + (1000 - location) + " miles until Oklahoma)");
+        }
+        else if (location < 1500) {
+            System.out.println("California, " + (1500 - location) + " miles until Kansas)");
+        }
+        else if (location < 1600) {
+            System.out.println("California, " + (1600 - location) + " miles until Illinois)");
+        }
+        else {
+            System.out.println("Illinois)");
+        }
         System.out.println("Money: " + character.getMoney() + "$");
         System.out.println("Hunger: " + character.getHunger() + "%");
         System.out.println("Food: " + vehicle.getFood() + " (" + vehicle.getCapacity() + " max)");
@@ -60,7 +81,7 @@ public class Game {
                     milesDriven += vehicle.getMileage();
                 }
                 if (vehicle.getGas() == 0) {
-                    System.out.println("You drove " + milesDriven + "miles and ran out of gas");
+                    System.out.println("You drove " + milesDriven + " miles and ran out of gas");
                 }//create new variable for car labeled "speed"- lambo travels 100/miles day,  
                 //prius 60 miles/day that way each car has distinctive advantages and gameplay
                 else {
@@ -76,6 +97,7 @@ public class Game {
                     System.out.println("How much money would you like to put up? You have $"+character.getMoney()); 
                     int bet = scan.nextInt(); 
                     if(bet >= character.getMoney()){ 
+                        System.out.println("You don't have that much, so you bet all your money");
                         bet = character.getMoney();
                     } 
                     if(Math.random() > 0.5){
@@ -154,35 +176,34 @@ public class Game {
                             System.out.println("You ran out of money and could only buy " + amount + " days worth of food");
                         }
                         if((amount + vehicle.getFood()) > vehicle.getCapacity()){ //trying to fit more food than we can
-                            System.out.println("You couldn't fit the food in your car and wasted "+(amount+vehicle.getFood()-vehicle.getCapacity())+" days worth of food ($" + (amount * 15) + ")"); 
+                            System.out.println("You couldn't fit the food in your car and wasted "+(amount+vehicle.getFood()-vehicle.getCapacity())+" days worth of food"); 
                             vehicle.setFood(vehicle.getCapacity()); 
                         }
                         else {
                             vehicle.incrementFood(amount);
                         }
                         character.incrementMoney(-15 * amount);
+                        System.out.println("You spend $" + amount * 15 + ". You now have " + vehicle.getFood() + " days of food stored in your vehicle");
                     } 
                     if (choice == 1) {  // buy gas
-                        System.out.println("You have $"+character.getMoney()+". Gas costs $5/gallon and your "+vehicle.getModel()+" needs " + (20 - vehicle.getGas()) + " for a full tank. \nHow many gallons would you like to buy?"); 
+                        System.out.println("You have $"+character.getMoney()+". Gas costs $5/gallon and your "+vehicle.getModel()+" needs " + (20 - vehicle.getGas()) + " gallons for a full tank. \nHow many gallons would you like to buy?"); 
                         int amount = scan.nextInt();
                         if(amount * 5 >= character.getMoney()){  //trying to buy more than we can afford
                             amount = character.getMoney()/5;
                             System.out.println("You ran out of money and could only buy " + amount + " gallons");
                         }
                         if((amount + vehicle.getFood()) > vehicle.getCapacity()){ //trying to fit more gas than we can
-                            System.out.println("You overfilled and wasted " + (amount + vehicle.getGas()-20) + " gallons ($" + (amount * 5) + ")"); 
+                            System.out.println("You overfilled and wasted " + (amount + vehicle.getGas()-20) + " gallons"); 
                             vehicle.setGas(20);
                         }
                         else {
                             vehicle.incrementGas(amount);
                         }
                         character.incrementMoney(-5 * amount);
+                        System.out.println("You spend $" + amount * 5 + ". You now have " + vehicle.getGas() + " gallons of gas in your vehicle");
                     }
                     else if (choice == 2) {
                         doneShopping = true;
-                    }
-                    else {
-                        System.out.println("That's not an option!");
                     }
                 }
                 done = true;
@@ -215,21 +236,44 @@ public class Game {
         day++;
     }
 
+    public void locationEvents() {
+        if (location > 200 && oldLocation < 100) {
+            System.out.println("You're now in Arizona");
+        }
+        if (location > 500 && oldLocation < 500) {
+            System.out.println("You're now in New Mexico");
+        }
+        if (location > 800 && oldLocation < 800) {
+            System.out.println("You're now in Texas");
+        }
+        if (location > 1000 && oldLocation < 1000) {
+            System.out.println("You're now in Oklahoma");
+        }
+        if (location > 1500 && oldLocation < 1500) {
+            System.out.println("You're now in Kansas");
+        }
+        if (location > 1600 && oldLocation < 1600) {
+            System.out.println("You're now in Missouri");
+        }
+        if (location > 2000 && oldLocation < 2000) {
+            System.out.println("You're now in Illinois");
+        }
+
+        oldLocation = location;
+    }
+
     public int checkGameOver() {
         if (character.getHunger() < 0) {
             return 1; //starved to death
         }
-        else if (character.getMoney() < 0) {
-            return 2; //got into debt and shot by debters (we can implement debt later if we want, too lazy rn)
-        }
         else if (day > dayLimit) {
-            return 3; //ran out of time
+            return 2; //ran out of time
         }
         else if (arrested) {
-            return 4;
+            return 3;
         }
         else if (location > 2500) {
-            return 5; //won
+            return 4; //won
         }
         return 0; //game not over
     }
