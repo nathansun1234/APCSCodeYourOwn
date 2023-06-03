@@ -237,25 +237,25 @@ public class Game {
     }
 
     public void locationEvents() {
-        if (location > 200 && oldLocation < 100) {
+        if (location >= 200 && oldLocation < 100) {
             System.out.println("You're now in Arizona");
         }
-        if (location > 500 && oldLocation < 500) {
+        if (location >= 500 && oldLocation < 500) {
             System.out.println("You're now in New Mexico");
         }
-        if (location > 800 && oldLocation < 800) {
+        if (location >= 800 && oldLocation < 800) {
             System.out.println("You're now in Texas");
         }
-        if (location > 1000 && oldLocation < 1000) {
+        if (location >= 1000 && oldLocation < 1000) {
             System.out.println("You're now in Oklahoma");
         }
-        if (location > 1500 && oldLocation < 1500) {
+        if (location >= 1500 && oldLocation < 1500) {
             System.out.println("You're now in Kansas");
         }
-        if (location > 1600 && oldLocation < 1600) {
+        if (location >= 1600 && oldLocation < 1600) {
             System.out.println("You're now in Missouri");
         }
-        if (location > 2000 && oldLocation < 2000) {
+        if (location >= 2000 && oldLocation < 2000) {
             System.out.println("You're now in Illinois");
         }
 
