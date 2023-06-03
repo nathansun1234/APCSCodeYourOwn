@@ -22,7 +22,7 @@ public class Game {
         int carId = scan.nextInt();
 
         //inits variables
-        character = new Person(name);
+        character = new Person(name, difficulty);
         vehicle = new Car(carId);
         oldLocation = 0;
         location = 0; 

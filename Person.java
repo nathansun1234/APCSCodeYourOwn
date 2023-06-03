@@ -3,10 +3,18 @@ public class Person {
     private int money; 
     private int hunger; //must increment by 10s
 
-    public Person(String name){  
+    public Person(String name, int difficulty){  
         this.name = name;   
         hunger = 100;
-        money = 1000;
+        if (difficulty == 0) {
+            money = 1000;
+        }
+        else if (difficulty == 1) {
+            money = 500;
+        }
+        else if (difficulty == 2) {
+            money = 100;
+        }
     } 
 
     public void setHunger(int a) { 
