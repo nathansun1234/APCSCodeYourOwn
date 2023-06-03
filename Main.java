@@ -5,17 +5,13 @@ public class Main {
         int gameOver = 0;
         while (gameOver == 0) {
             round.printInfo();
-            round.turn();
-            round.locationEvents();
-            gameOver = round.checkGameOver();
             System.out.println("");
+            round.turn();
+            System.out.println("");
+            round.locationEvents();
+            System.out.println("");
+            gameOver = round.checkGameOver(); 
         }
-        if (gameOver == 1) {
-
-        }
-        else if (gameOver == 2) {
-
-        }
-        
+        round.printFinalStats(gameOver);
     }
 }

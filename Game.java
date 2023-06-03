@@ -121,7 +121,13 @@ public class Game {
                             character.incrementMoney(1000);
                         }
                         else if (randInt < 75) {
-                            int fine = (int) (900 * Math.random()) + 100;
+                            int fine;
+                            if (character.getMoney() > 100) {
+                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
+                            }
+                            else {
+                                fine = character.getMoney();
+                            }
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -136,7 +142,13 @@ public class Game {
                             character.incrementMoney(1000);
                         }
                         else if (randInt < 70) {
-                            int fine = (int) (900 * Math.random()) + 100;
+                            int fine;
+                            if (character.getMoney() > 100) {
+                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
+                            }
+                            else {
+                                fine = character.getMoney();
+                            }
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -151,7 +163,13 @@ public class Game {
                             character.incrementMoney(1000);
                         }
                         else if (randInt < 60) {
-                            int fine = (int) (900 * Math.random()) + 100;
+                            int fine;
+                            if (character.getMoney() > 100) {
+                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
+                            }
+                            else {
+                                fine = character.getMoney();
+                            }
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -217,7 +235,7 @@ public class Game {
                 else if (choice == 1) {
                     System.out.println("Gamble: Bet a certain amount of money, 50% it'll get doubled and 50% it'll be lose");
                     System.out.println("Work: Make a random amount between $50 and $100");
-                    System.out.println("Rob a bank: Either succeed and make $1000, fined an amount between $100-$1000, or arrested (lose). Chance of success depends on the vehicle (Lamborghini: 50%, Ford: 30%, Honda: 20%). Fine or arrested split evenly among remaining chance");
+                    System.out.println("Rob a bank: Either succeed and make $1000, fined an amount between $100 to all your money, or arrested (lose). Chance of success depends on the vehicle (Lamborghini: 50%, Ford: 30%, Honda: 20%). Fine or arrested split evenly among remaining chance");
                 }
                 else if (choice == 2) {
                     System.out.println("Buy gas and food");
@@ -232,6 +250,10 @@ public class Game {
         }
         else { //if not, we get hungrier
             character.incrementHunger(-10);
+        }
+        if (character.getMoney() < 0) {
+            System.out.println("The IRS found out you were bankrupt and arrested you."); //todo: do we want to make this a random chance?
+            arrested = true;
         }
         day++;
     }
@@ -258,7 +280,6 @@ public class Game {
         if (location >= 2000 && oldLocation < 2000) {
             System.out.println("You're now in Illinois");
         }
-
         oldLocation = location;
     }
 
@@ -278,7 +299,18 @@ public class Game {
         return 0; //game not over
     }
 
-    public void printFinalStats() {
-
+    public void printFinalStats(int i) {
+        if (i == 1) {
+            System.out.println("Game over: You starved to death");
+        }
+        else if (i == 2) {
+            System.out.println("Game over: You didn't reach the destination in " + dayLimit + " days");
+        }
+        else if (i == 3) {
+            System.out.println("Game over: You got arrested");
+        }
+        else if (i == 4) {
+            System.out.println("Congrats! You completed all of Route 66 in " + day + " days");
+        }
     }
 }
