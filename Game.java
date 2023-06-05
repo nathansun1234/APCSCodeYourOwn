@@ -224,7 +224,7 @@ public class Game {
                         doneShopping = true;
                     }
                 }
-                done = true;
+                
             }
             else if (action == 3) { //get info
                 System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop)");
@@ -252,8 +252,10 @@ public class Game {
             character.incrementHunger(-10);
         }
         if (character.getMoney() < 0) {
+            if(Math.random()>0.5){
             System.out.println("The IRS found out you were bankrupt and arrested you."); //todo: do we want to make this a random chance?
-            arrested = true;
+            arrested = true; 
+            }
         }
         day++;
     }
