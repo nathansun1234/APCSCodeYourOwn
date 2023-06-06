@@ -299,7 +299,19 @@ public class Game {
             return 4; //won
         }
         return 0; //game not over
+    } 
+
+    public void doRandomEvent(){ 
+        double a = Math.random(); 
+        if(a<0.1){ 
+            System.out.println("Oh no! Somebody siphoned all your gas and stole your food. Food and Gas to 0"); 
+            vehicle.setFood(0); 
+            vehicle.setGas(0); 
+        } 
+   
+        }
     }
+
 
     public void printFinalStats(int i) {
         if (i == 1) {
@@ -314,5 +326,5 @@ public class Game {
         else if (i == 4) {
             System.out.println("Congrats! You completed all of Route 66 in " + day + " days");
         }
-    }
+    } 
 }
