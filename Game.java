@@ -35,19 +35,19 @@ public class Game implements Serializable{
         day = 1;
         arrested = false;
         if (difficulty == 0) {
-            dayLimit = 40;
+            dayLimit = 50;
         }
         else if (difficulty == 1) {
-            dayLimit = 30;
+            dayLimit = 45;
         }
         else if (difficulty == 2) {
-            dayLimit = 25;
+            dayLimit = 35;
         }
     }
     
     public void doRandomEvent(){ 
         double a = Math.random(); 
-        if (a < 0.000001) {
+        if (a < 0.001) {
             System.out.println("You won the lottery! Money increased by $1,000,000");
             character.incrementMoney(1000000);
         }
@@ -95,12 +95,42 @@ public class Game implements Serializable{
             }
         }
         else if (a < 0.4) {
-            if (character.getHunger() > 0.5) {
-                System.out.println("You get a cold. Your hunger goes down 50% from the energy you use to fight it off.");
-                character.incrementHunger(-50);
+            if (character.getHealth() > 0.5) {
+                System.out.println("You get a cold. Your health goes down 30% from the energy you use to fight it off.");
+                character.incrementHealth(-30);
+            }
+        } 
+        else if(a < 0.45){ 
+            System.out.println("A tow truck driver says that he pities your "+vehicle.getModel()+". He tows you for 100 miles."); 
+            location += 100;
+        } 
+        else if (a < 0.5){ 
+            System.out.println("An urban witch offers you a mysterious looking juice. Do you take it? (y/n)"); 
+                String accept = scan.next();
+                boolean witchGood = (int) (4 * Math.random()) != 0;
+                if (accept.toLowerCase().equals("y")) {
+                    if (witchGood) {
+                        System.out.println("The juice tasted a little funny but you suddenly feel full and in great health. Food and health to 100%" );
+                        vehicle.setFood(vehicle.getCapacity());
+                        character.setHealth(100);
+                    }
+                    else {
+                        System.out.println("The juice helps you grow wings and you fly away to heaven. You die instantly.");
+                        character.setHealth(-10);
+                    }
+                }
+                else {
+                    if (witchGood) {
+                        System.out.println("The witch reveals herself to be part of a comedy prank show and gives you $100"); 
+                        character.incrementMoney(100);
+                    }
+                    else {
+                        System.out.println("The witch tells you that the juice was actually poison. Close call.");
+                    } 
+                } 
             }
         }
-    }
+    
 
     public void printInfo() {
         System.out.println("DAY " + day);
@@ -112,22 +142,22 @@ public class Game implements Serializable{
             System.out.println("Arizona, " + (500 - location) + " miles until New Mexico)");
         }
         else if (location < 800) {
-            System.out.println("California, " + (800 - location) + " miles until Texas)");
+            System.out.println("New Mexico, " + (800 - location) + " miles until Texas)");
         }
         else if (location < 1000) {
-            System.out.println("California, " + (1000 - location) + " miles until Oklahoma)");
+            System.out.println("Texas, " + (1000 - location) + " miles until Oklahoma)");
         }
         else if (location < 1500) {
-            System.out.println("California, " + (1500 - location) + " miles until Kansas)");
+            System.out.println("Oklahoma, " + (1500 - location) + " miles until Kansas)");
         }
         else if (location < 1600) {
-            System.out.println("California, " + (1600 - location) + " miles until Illinois)");
+            System.out.println("Kansas, " + (1600 - location) + " miles until Illinois)");
         }
         else {
             System.out.println("Illinois)");
         }
         System.out.println("Money: " + character.getMoney() + "$");
-        System.out.println("Hunger: " + character.getHunger() + "%");
+        System.out.println("Health: " + character.getHealth() + "%");
         System.out.println("Food: " + vehicle.getFood() + " (" + vehicle.getCapacity() + " max)");
         System.out.println("Gas: " + vehicle.getGas() + " gallons");
     } //todo: maybe have max tank size for each car?
@@ -185,7 +215,8 @@ public class Game implements Serializable{
                 }
                 else if (choice == 1) { //work
                     int wageMade = (int) (50 * Math.random()) + 50; //you can make between 50 and 100 dollars, change if you want
-                    System.out.println("You made $" + wageMade + "!");
+                    System.out.println("You made $" + wageMade + "!"); 
+                    character.incrementMoney(wageMade);
                 }
                 else if (choice == 2) { //rob a bank
                     int randInt = (int) (100 * Math.random());
@@ -301,7 +332,7 @@ public class Game implements Serializable{
                 
             }
             else if (action == 3) { //get info
-                System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop)");
+                System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop, 3 = Food and health)");
                 int choice = scan.nextInt();
                 if (choice == 0) {
                     System.out.println("You'll drive 100 miles or until your vehicle runs out of gas, each vehicle has a different mileage");
@@ -314,16 +345,19 @@ public class Game implements Serializable{
                 else if (choice == 2) {
                     System.out.println("Buy gas and food");
                 }
+                else if (choice == 3) {
+                    System.out.println("Every day, you attempt to eat one day's worth of foof. If you don't have that, your health decreases 10%. Your health can also decrease from other factors. If your health reaches 0, you die. If you eat food with a health bar of less than 100%, your health will increase by 10%");
+                }
             }
         }
         if (vehicle.getFood() > 0) { //if we have food in the car, eat food
             vehicle.incrementFood(-1);
-            if (character.getHunger() <= 90) {
-                character.incrementHunger(10); //you also refill your hunger bar if it was low
+            if (character.getHealth() <= 90) {
+                character.incrementHealth(10); //you also refill your health bar if it was low
             } 
         }
-        else { //if not, we get hungrier
-            character.incrementHunger(-10);
+        else { //if not, health gets worse
+            character.incrementHealth(-10);
         }
         if (character.getMoney() < 0) {
             if(Math.random() > 0.5){
@@ -360,8 +394,8 @@ public class Game implements Serializable{
     }
 
     public int checkGameOver() {
-        if (character.getHunger() < 0) {
-            return 1; //starved to death
+        if (character.getHealth() < 0) {
+            return 1; //died
         }
         else if (day > dayLimit) {
             return 2; //ran out of time
@@ -369,7 +403,7 @@ public class Game implements Serializable{
         else if (arrested) {
             return 3;
         }
-        else if (location > 2500) {
+        else if (location >= 2500) {
             return 4; //won
         }
         return 0; //game not over
@@ -378,7 +412,7 @@ public class Game implements Serializable{
     public void printFinalStats(int i) {
         switch (i) {
             case 1:
-                System.out.print("Game over: You starved to death. ");
+                System.out.print("Game over: You died");
                 break;
             case 2:
                 System.out.println("Game over: You didn't reach the destination in " + dayLimit + " days");
@@ -387,11 +421,11 @@ public class Game implements Serializable{
                 System.out.println("Game over: You got arrested");
                 break;
             case 4:
-                System.out.println("Congrats! You completed all of Route 66 in " + day + " days");
+                System.out.println("Congrats, "+character.getName()+"! You completed all of Route 66 in " + day + " days");
                 break;
         }
         if (i != 4) {
             System.out.println("You made it " + location + " miles");
         }
-    } 
+    }  
 }

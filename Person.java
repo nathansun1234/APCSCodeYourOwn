@@ -1,11 +1,11 @@
 public class Person { 
     private String name; 
     private int money; 
-    private int hunger; //must increment by 10s
+    private int health; //must increment by 10s
 
     public Person(String name, int difficulty){  
         this.name = name;   
-        hunger = 100;
+        health = 100;
         if (difficulty == 0) {
             money = 1000;
         }
@@ -17,16 +17,16 @@ public class Person {
         }
     } 
 
-    public void setHunger(int a) { 
-        hunger = a;
+    public void setHealth(int a) { 
+        health = a;
     }
 
-    public void incrementHunger(int a) {
-        hunger += a;
+    public void incrementHealth(int a) {
+        health += a;
     }
 
-    public int getHunger() { 
-        return hunger;
+    public int getHealth() { 
+        return health;
     }
 
     public void setMoney(int a)
