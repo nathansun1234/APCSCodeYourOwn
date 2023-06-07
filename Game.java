@@ -38,9 +38,66 @@ public class Game {
             dayLimit = 25;
         }
     }
+    
+    public void doRandomEvent(){ 
+        double a = Math.random(); 
+        if (a < 0.000001) {
+            System.out.println("You won the lottery! Money increased by $1,000,000");
+            character.incrementMoney(1000000);
+        }
+        else if (a < 0.05) { 
+            System.out.println("Oh no! Somebody siphoned all your gas and stole your food. Food and Gas to 0"); 
+            vehicle.setFood(0); 
+            vehicle.setGas(0); 
+        }
+        else if (a < 0.15) {
+            if (vehicle.getFood() >= 1) {
+                System.out.println("A hitchhiker asks you for a day of food. He tells you that he'll pay you 10$. Do you accept? (y/n)");
+                String accept = scan.next();
+                boolean hitchhikerGood = (int) (2 * Math.random()) == 0;
+                if (accept.toLowerCase().equals("y")) {
+                    if (hitchhikerGood) {
+                        int amtPaid = (int) (15 * Math.random()) + 5;
+                        System.out.println("The hitchhiker thanks you, and actually pays you $" + amtPaid);
+                        vehicle.incrementFood(-1);
+                        character.incrementMoney(amtPaid);
+                    }
+                    else {
+                        System.out.println("The hitchhiker runs away once you give the food to him");
+                        vehicle.incrementFood(-1);
+                    }
+                }
+                else {
+                    if (hitchhikerGood) {
+                        System.out.println("The hitchhiker leaves.");
+                    }
+                    else {
+                        System.out.println("The hitchhiker takes your food anyways");
+                        vehicle.incrementFood(-1);
+                    }
+                }
+            }
+        }
+        else if (a < 0.25) {
+            int moneyFound = (int) (20 * Math.random()) + 1;
+            System.out.println("You found $" + moneyFound + " randomly!");
+        }
+        else if (a < 0.3) {
+            if (character.getMoney() >= 100) {
+                System.out.println("Your car broke down. You spend 100$ to fix it.");
+                character.incrementMoney(-100);
+            }
+        }
+        else if (a < 0.4) {
+            if (character.getHunger() > 0.5) {
+                System.out.println("You get a cold. Your hunger goes down 50% from the energy you use to fight it off.");
+                character.incrementHunger(-50);
+            }
+        }
+    }
 
     public void printInfo() {
-        System.out.println("Day " + day + " / " + dayLimit);
+        System.out.println("DAY " + day);
         System.out.print("Location: " + location + " miles / 2500 miles (Currently in ");
         if (location < 200) {
             System.out.println("California, " + (200 - location) + " miles until Arizona)");
@@ -247,13 +304,16 @@ public class Game {
         }
         if (vehicle.getFood() > 0) { //if we have food in the car, eat food
             vehicle.incrementFood(-1);
+            if (character.getHunger() <= 90) {
+                character.incrementHunger(10); //you also refill your hunger bar if it was low
+            } 
         }
         else { //if not, we get hungrier
             character.incrementHunger(-10);
         }
         if (character.getMoney() < 0) {
-            if(Math.random()>0.5){
-            System.out.println("The IRS found out you were bankrupt and arrested you."); //todo: do we want to make this a random chance?
+            if(Math.random() > 0.5){
+            System.out.println("The IRS found out you were bankrupt and arrested you."); 
             arrested = true; 
             }
         }
@@ -300,18 +360,6 @@ public class Game {
         }
         return 0; //game not over
     } 
-
-    public void doRandomEvent(){ 
-        double a = Math.random(); 
-        if(a<0.1){ 
-            System.out.println("Oh no! Somebody siphoned all your gas and stole your food. Food and Gas to 0"); 
-            vehicle.setFood(0); 
-            vehicle.setGas(0); 
-        } 
-   
-        }
-    }
-
 
     public void printFinalStats(int i) {
         if (i == 1) {

@@ -6,6 +6,8 @@ public class Main {
         while (gameOver == 0) {
             round.printInfo();
             System.out.println("");
+            round.doRandomEvent();
+            System.out.println("");
             round.turn();
             System.out.println("");
             round.locationEvents();
