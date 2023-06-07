@@ -315,7 +315,8 @@ public class Game implements Serializable{
                             amount = character.getMoney()/5;
                             System.out.println("You ran out of money and could only buy " + amount + " gallons");
                         }
-                        if((amount + vehicle.getFood()) > vehicle.getCapacity()){ //trying to fit more gas than we can
+                        if((amount + vehicle.getGas()) > 20){ //trying to fit more gas than we can
+
                             System.out.println("You overfilled and wasted " + (amount + vehicle.getGas()-20) + " gallons"); 
                             vehicle.setGas(20);
                         }
