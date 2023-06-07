@@ -1,5 +1,11 @@
 import java.util.*;
-public class Game {
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+public class Game implements Serializable{
+    private static final long serialVersionUID = 1L;
     private Person character;
     private Car vehicle;
     private int oldLocation;
@@ -129,8 +135,19 @@ public class Game {
     public void turn() {
         boolean done = false;
         while (!done) {
+            int action = 0;
+            Boolean gotOption = false;
             System.out.println("What do you want to do today? (0 = Drive, 1 = Earn money, 2 = Shop, 3 = Get info on actions-doesn't take time)");
-            int action = scan.nextInt();
+            while (!gotOption) {
+                try {
+                    String actionString = scan.nextLine();
+                    action = Integer.parseInt(actionString);
+                    if (action <= 3 && action >= 0) {
+                        gotOption = true;
+                    }
+                }
+                catch(Exception e) {}
+            }
             if (action == 0) { //drive
                 int milesDriven = 0;
                 while (vehicle.getGas() > 0 &&  milesDriven < 101-vehicle.getMileage()) {
@@ -298,9 +315,6 @@ public class Game {
                     System.out.println("Buy gas and food");
                 }
             }
-            else {
-                System.out.println("That's not an option! You sat around all day and didn't do anything.");
-            }
         }
         if (vehicle.getFood() > 0) { //if we have food in the car, eat food
             vehicle.incrementFood(-1);
@@ -362,17 +376,22 @@ public class Game {
     } 
 
     public void printFinalStats(int i) {
-        if (i == 1) {
-            System.out.println("Game over: You starved to death");
+        switch (i) {
+            case 1:
+                System.out.print("Game over: You starved to death. ");
+                break;
+            case 2:
+                System.out.println("Game over: You didn't reach the destination in " + dayLimit + " days");
+                break;
+            case 3:
+                System.out.println("Game over: You got arrested");
+                break;
+            case 4:
+                System.out.println("Congrats! You completed all of Route 66 in " + day + " days");
+                break;
         }
-        else if (i == 2) {
-            System.out.println("Game over: You didn't reach the destination in " + dayLimit + " days");
-        }
-        else if (i == 3) {
-            System.out.println("Game over: You got arrested");
-        }
-        else if (i == 4) {
-            System.out.println("Congrats! You completed all of Route 66 in " + day + " days");
+        if (i != 4) {
+            System.out.println("You made it " + location + " miles");
         }
     } 
 }
