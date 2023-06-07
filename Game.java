@@ -34,14 +34,14 @@ public class Game implements Serializable{
         location = 0; 
         day = 1;
         arrested = false;
-        if (difficulty == 0) {
-            dayLimit = 50;
+        if (difficulty == 2) {
+            dayLimit = 35;
         }
         else if (difficulty == 1) {
             dayLimit = 45;
         }
-        else if (difficulty == 2) {
-            dayLimit = 35;
+        else {
+            dayLimit = 50;
         }
     }
     
@@ -64,12 +64,12 @@ public class Game implements Serializable{
                 if (accept.toLowerCase().equals("y")) {
                     if (hitchhikerGood) {
                         int amtPaid = (int) (15 * Math.random()) + 5;
-                        System.out.println("The hitchhiker thanks you, and actually pays you $" + amtPaid);
+                        System.out.println("The hitchhiker thanks you, and actually pays you $" + amtPaid + ". You now have " + vehicle.getFood() + " days of food and $" + character.getMoney());
                         vehicle.incrementFood(-1);
                         character.incrementMoney(amtPaid);
                     }
                     else {
-                        System.out.println("The hitchhiker runs away once you give the food to him");
+                        System.out.println("The hitchhiker runs away once you give the food to him. You now have " + vehicle.getFood() + " days of food");
                         vehicle.incrementFood(-1);
                     }
                 }
@@ -78,7 +78,7 @@ public class Game implements Serializable{
                         System.out.println("The hitchhiker leaves.");
                     }
                     else {
-                        System.out.println("The hitchhiker takes your food anyways");
+                        System.out.println("The hitchhiker takes your food anyways. You now have " + vehicle.getFood() + " days of food");
                         vehicle.incrementFood(-1);
                     }
                 }
@@ -86,22 +86,22 @@ public class Game implements Serializable{
         }
         else if (a < 0.25) {
             int moneyFound = (int) (20 * Math.random()) + 1;
-            System.out.println("You found $" + moneyFound + " randomly!");
+            System.out.println("You found $" + moneyFound + " randomly! You now have $" + character.getMoney());
         }
         else if (a < 0.3) {
             if (character.getMoney() >= 100) {
-                System.out.println("Your car broke down. You spend 100$ to fix it.");
+                System.out.println("Your car broke down. You spend 100$ to fix it. You now have $" + character.getMoney());
                 character.incrementMoney(-100);
             }
         }
         else if (a < 0.4) {
             if (character.getHealth() > 0.5) {
-                System.out.println("You get a cold. Your health goes down 30% from the energy you use to fight it off.");
+                System.out.println("You get a cold. Your health goes down 30% from the energy you use to fight it off. Your health is now " + character.getHealth() + "%");
                 character.incrementHealth(-30);
             }
         } 
         else if(a < 0.45){ 
-            System.out.println("A tow truck driver says that he pities your "+vehicle.getModel()+". He tows you for 100 miles."); 
+            System.out.println("A tow truck driver says that he pities your "+vehicle.getModel()+". He tows you for 100 miles. You are now at " + location + " miles"); 
             location += 100;
         } 
         else if (a < 0.5){ 
@@ -121,7 +121,7 @@ public class Game implements Serializable{
                 }
                 else {
                     if (witchGood) {
-                        System.out.println("The witch reveals herself to be part of a comedy prank show and gives you $100"); 
+                        System.out.println("The witch reveals herself to be part of a comedy prank show and gives you $100. You now have $" + character.getMoney()); 
                         character.incrementMoney(100);
                     }
                     else {
@@ -133,7 +133,7 @@ public class Game implements Serializable{
     
 
     public void printInfo() {
-        System.out.println("DAY " + day);
+        System.out.println("DAY " + day + " / " + dayLimit);
         System.out.print("Location: " + location + " miles / 2500 miles (Currently in ");
         if (location < 200) {
             System.out.println("California, " + (200 - location) + " miles until Arizona)");
@@ -227,12 +227,7 @@ public class Game implements Serializable{
                         }
                         else if (randInt < 75) {
                             int fine;
-                            if (character.getMoney() > 100) {
-                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
-                            }
-                            else {
-                                fine = character.getMoney();
-                            }
+                            fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -248,12 +243,7 @@ public class Game implements Serializable{
                         }
                         else if (randInt < 70) {
                             int fine;
-                            if (character.getMoney() > 100) {
-                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
-                            }
-                            else {
-                                fine = character.getMoney();
-                            }
+                            fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -269,12 +259,7 @@ public class Game implements Serializable{
                         }
                         else if (randInt < 60) {
                             int fine;
-                            if (character.getMoney() > 100) {
-                                fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
-                            }
-                            else {
-                                fine = character.getMoney();
-                            }
+                            fine = (int) (Math.random() * (character.getMoney() - 100)) + 100;
                             System.out.println("You got caught. You were fined $" + fine);
                             character.incrementMoney(-1 * fine);
                         }
@@ -333,7 +318,7 @@ public class Game implements Serializable{
                 
             }
             else if (action == 3) { //get info
-                System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop, 3 = Food and health)");
+                System.out.println("What do you want to know about? (0 = Drive, 1 = Earn money, 2 = Shop, 3 = Food, health, and money)");
                 int choice = scan.nextInt();
                 if (choice == 0) {
                     System.out.println("You'll drive 100 miles or until your vehicle runs out of gas, each vehicle has a different mileage");
@@ -347,7 +332,7 @@ public class Game implements Serializable{
                     System.out.println("Buy gas and food");
                 }
                 else if (choice == 3) {
-                    System.out.println("Every day, you attempt to eat one day's worth of foof. If you don't have that, your health decreases 10%. Your health can also decrease from other factors. If your health reaches 0, you die. If you eat food with a health bar of less than 100%, your health will increase by 10%");
+                    System.out.println("Every day, you attempt to eat one day's worth of food. If you don't have that, your health decreases 10%. Your health can also decrease from other factors. If your health reaches 0, you die. If you eat food with a health bar of less than 100%, your health will increase by 10%. As for money, you can spend until you are in debt. If you are in debt, not only can you not buy more things, but you have a chance of being arrested by the IRS everyday.");
                 }
             }
         }

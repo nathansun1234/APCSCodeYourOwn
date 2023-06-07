@@ -15,6 +15,7 @@ includes methods for modifying and returning the instance variables
 ### Main.java (Yusuf)
 - Includes the int gameOver and the Game round
 - Includes the method main: while the game is not over, runs the Game methods. when the game ends, exits the loop and prints the game over method
+
 ## How to
 - Answer game's prompts in the Run terminal
 - Play the modern version of The Oregon Trail, travel 2500 miles from Santa Monica to Chicago without dying or going to jail

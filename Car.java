@@ -17,7 +17,7 @@ public class Car {
             mileage = 20;
             capacity = 10;
         }
-        else if (id == 2) {
+        else {
             model = "Honda Civic";
             mileage = 25;
             capacity = 5;

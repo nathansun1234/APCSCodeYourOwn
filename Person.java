@@ -6,14 +6,14 @@ public class Person {
     public Person(String name, int difficulty){  
         this.name = name;   
         health = 100;
-        if (difficulty == 0) {
-            money = 1000;
+        if (difficulty == 2) {
+            money = 100;
         }
         else if (difficulty == 1) {
             money = 500;
         }
-        else if (difficulty == 2) {
-            money = 100;
+        else  {
+            money = 1000;
         }
     } 
 

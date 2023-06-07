@@ -8,6 +8,10 @@ public class Main {
             System.out.println("");
             round.doRandomEvent();
             System.out.println("");
+            gameOver = round.checkGameOver(); 
+            if (gameOver != 0) { //in case the random event ends the game
+                break;
+            }
             round.turn();
             System.out.println("");
             round.locationEvents();
