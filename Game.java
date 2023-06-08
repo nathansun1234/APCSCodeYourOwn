@@ -17,8 +17,10 @@ public class Game implements Serializable{
     Scanner scan = new Scanner(System.in);
     public Game() {
         //asks for values for character, car, settings
-        System.out.println("Welcome to Route 66!");//todo: write intro
-
+        System.out.println("WELCOME TO ROUTE 66!");//todo: write intro
+        System.out.println("");
+        System.out.println("In our game, Route 66, the player is supposed travel 2500 miles from Santa Monica to Chicago without dying or being jailed. At the beginning, the player picks the difficulty they want to play on from three options: easy, medium, or hard. Then the player chooses a name and a car to drive in from the selection. After this, the game begins. The player can choose from four actions: drive, earn money, shop, or get info on the actions, which doesn’t take any time from the game. If the player chooses to earn money, they are given 3 options: gamble, work, or rob a bank. If the player choses to shop, they can buy food or gas. During the game, the player will experience many events. They could randomly find money, win the lottery, be robbed of all their food and gas, be asked by a hitchhiker for food who generally take the food anyways, or get sick.");
+        System.out.println("");
         System.out.println("Choose your difficulty: (0 = easy, 1 = medium, 2 = hard)");
         int difficulty = scan.nextInt();
 
