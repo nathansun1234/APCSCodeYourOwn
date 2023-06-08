@@ -23,7 +23,7 @@ public class Game implements Serializable{
         int difficulty = scan.nextInt();
 
         System.out.println("Name your character:");
-        String name = scan.nextLine();
+        String name = scan.next();
 
         System.out.println("Choose your car: (0 = Lamborghini Aventador, 1 = Ford F150, 2 = Honda Civic)"); //todo: add info about cars
         int carId = scan.nextInt();

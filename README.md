@@ -15,8 +15,7 @@ Includes methods that: prints info about the current turn (printInfo()), runs a 
 Includes the int gameOver and the Game round
 Includes the method main: while the game is not over, runs the Game methods. when the game ends, exits the loop and prints the game over method
 ## How to
-Answer game's prompts in the Run terminal
-Play the modern version of The Oregon Trail, travel 2500 miles from Santa Monica to Chicago without dying or going to jail
+Answer the game's prompts in the Run terminal
 ## Reqs
 ### Switch Statements
 A switch statement is used to switch the int variable corresponding to what caused the game to end in order to print the correct game over message
