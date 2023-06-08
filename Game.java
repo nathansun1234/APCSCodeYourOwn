@@ -13,6 +13,7 @@ public class Game implements Serializable{
     private int day;
     private int dayLimit;
     private boolean arrested;
+    private HashMap <String, Boolean> ynKey = new HashMap <String, Boolean>();
     Scanner scan = new Scanner(System.in);
     public Game() {
         //asks for values for character, car, settings
@@ -43,6 +44,10 @@ public class Game implements Serializable{
         else {
             dayLimit = 50;
         }
+        ynKey.put("y", true);
+        ynKey.put("n", false);
+        ynKey.put("yes", true);
+        ynKey.put("no", false);
     }
     
     public void doRandomEvent(){ 
@@ -61,16 +66,16 @@ public class Game implements Serializable{
                 System.out.println("A hitchhiker asks you for a day of food. He tells you that he'll pay you 10$. Do you accept? (y/n)");
                 String accept = scan.next();
                 boolean hitchhikerGood = (int) (2 * Math.random()) == 0;
-                if (accept.toLowerCase().equals("y")) {
+                if (ynKey.get(accept.toLowerCase())) {
                     if (hitchhikerGood) {
                         int amtPaid = (int) (15 * Math.random()) + 5;
-                        System.out.println("The hitchhiker thanks you, and actually pays you $" + amtPaid + ". You now have " + vehicle.getFood() + " days of food and $" + character.getMoney());
                         vehicle.incrementFood(-1);
                         character.incrementMoney(amtPaid);
+                        System.out.println("The hitchhiker thanks you, and actually pays you $" + amtPaid + ". You now have " + vehicle.getFood() + " days of food and $" + character.getMoney());
                     }
                     else {
-                        System.out.println("The hitchhiker runs away once you give the food to him. You now have " + vehicle.getFood() + " days of food");
                         vehicle.incrementFood(-1);
+                        System.out.println("The hitchhiker runs away once you give the food to him. You now have " + vehicle.getFood() + " days of food");
                     }
                 }
                 else {
@@ -78,51 +83,52 @@ public class Game implements Serializable{
                         System.out.println("The hitchhiker leaves.");
                     }
                     else {
-                        System.out.println("The hitchhiker takes your food anyways. You now have " + vehicle.getFood() + " days of food");
                         vehicle.incrementFood(-1);
+                        System.out.println("The hitchhiker takes your food anyways. You now have " + vehicle.getFood() + " days of food");
                     }
                 }
             }
         }
         else if (a < 0.25) {
             int moneyFound = (int) (20 * Math.random()) + 1;
+            character.incrementMoney(moneyFound);
             System.out.println("You found $" + moneyFound + " randomly! You now have $" + character.getMoney());
         }
         else if (a < 0.3) {
             if (character.getMoney() >= 100) {
-                System.out.println("Your car broke down. You spend 100$ to fix it. You now have $" + character.getMoney());
                 character.incrementMoney(-100);
+                System.out.println("Your car broke down. You spend 100$ to fix it. You now have $" + character.getMoney());
             }
         }
         else if (a < 0.4) {
             if (character.getHealth() > 0.5) {
-                System.out.println("You get a cold. Your health goes down 30% from the energy you use to fight it off. Your health is now " + character.getHealth() + "%");
                 character.incrementHealth(-30);
+                System.out.println("You get a cold. Your health goes down 30% from the energy you use to fight it off. Your health is now " + character.getHealth() + "%");
             }
         } 
         else if(a < 0.45){ 
-            System.out.println("A tow truck driver says that he pities your "+vehicle.getModel()+". He tows you for 100 miles. You are now at " + location + " miles"); 
             location += 100;
+            System.out.println("A tow truck driver says that he pities your "+vehicle.getModel()+". He tows you for 100 miles. You are now at " + location + " miles"); 
         } 
         else if (a < 0.5){ 
             System.out.println("An urban witch offers you a mysterious looking juice. Do you take it? (y/n)"); 
                 String accept = scan.next();
                 boolean witchGood = (int) (4 * Math.random()) != 0;
-                if (accept.toLowerCase().equals("y")) {
+                if (ynKey.get(accept.toLowerCase())) {
                     if (witchGood) {
-                        System.out.println("The juice tasted a little funny but you suddenly feel full and in great health. Food and health to 100%" );
                         vehicle.setFood(vehicle.getCapacity());
                         character.setHealth(100);
+                        System.out.println("The juice tasted a little funny but you suddenly feel full and in great health. Food and health to 100%" );
                     }
                     else {
-                        System.out.println("The juice helps you grow wings and you fly away to heaven. You die instantly.");
                         character.setHealth(-10);
+                        System.out.println("The juice helps you grow wings and you fly away to heaven. You die instantly.");
                     }
                 }
                 else {
                     if (witchGood) {
-                        System.out.println("The witch reveals herself to be part of a comedy prank show and gives you $100. You now have $" + character.getMoney()); 
                         character.incrementMoney(100);
+                        System.out.println("The witch reveals herself to be part of a comedy prank show and gives you $100. You now have $" + character.getMoney()); 
                     }
                     else {
                         System.out.println("The witch tells you that the juice was actually poison. Close call.");

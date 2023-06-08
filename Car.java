@@ -4,7 +4,6 @@ public class Car {
     private int gas; //max of 20
     private int capacity; //days of food it can carry
     private int food; //max of capacity
-
     public Car(int id) {
         gas = 20;
         if (id == 0) {
