@@ -1,6 +1,7 @@
 # APCSCodeYourOwn
 This app plays Route 66, a modern remake of The Oregon Trail
-Team: Jordan Hanleybrown, Nathan Sun, Yusuf Moazzam
+### Group members
+Jordan Hanleybrown, Nathan Sun, Yusuf Moazzam
 ## Classes
 ### Person.java (Jordan)
 Includes one String for character name and two ints for money and health
